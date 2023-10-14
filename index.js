@@ -2,12 +2,11 @@
 
 const cart = {
   items: [],
-  count: 0,
-
-  get totalPrice() {
-    return this.calculateItemPrice();
+  get totalPricing() {
+    return this.totalPrice = this.calculateItemPrice();
   },
-
+  totalPrice: 0,
+  count: 0,
   add(nameItem, price, sum = 1) {
     const newItem = {
       nameItem,
@@ -21,9 +20,11 @@ const cart = {
     this.count += number;
   },
   calculateItemPrice(val = 0) {
-    const res = this.items.reduce((acc, item) =>
-      acc += item.price * item.amount, 0);
-    return res;
+    this.items.forEach((item) => {
+      val += item.price * item.sum;
+    });
+    const rebate = val * `0.${this.discount}`;
+    return val - rebate;
   },
   clear() {
     this.items = [];
@@ -35,8 +36,16 @@ const cart = {
     console.log(cartStr);
     console.log('Общая стоимость корзины:', this.totalPrice);
   },
+  set setDiscount(value) {
+    if (value === 'METHED') {
+      this.discount = 15;
+    }
+    if (value === 'NEWYEAR') {
+      this.discount = 21;
+    }
+  },
+  discount: 0,
 };
-
 
 cart.clear();
 
