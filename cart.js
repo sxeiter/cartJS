@@ -2,68 +2,54 @@
 
 const cart = {
   items: [],
+  get totalPricing() {
+    return this.totalPrice = this.calculateItemPrice();
+  },
+  totalPrice: 0,
   count: 0,
-
-  get totalPrice() {
-    return this.calculateItemPrice();
+  add(nameItem, price, sum = 1) {
+    const newItem = {
+      nameItem,
+      price,
+      sum,
+    };
+    this.count += 1;
+    this.items.push(newItem);
   },
-
-  get Discount() {
-    return this.discount;
+  increaseCount(number) {
+    this.count += number;
   },
-
-  set Discount(str) {
-    if (str === 'METHED') {
-      this.discount = 15;
-    }
-
-    if (str === 'NEWYEAR') {
-      this.discount = 21;
-    } else {
-      console.log('no');
-    }
+  calculateItemPrice(val = 0) {
+    this.items.forEach((item) => {
+      val += item.price * item.sum;
+    });
+    const rebate = val * `0.${this.discount}`;
+    return val - rebate;
   },
-
-  add(title, price, amount = 1) {
-    const item = {title, price, amount};
-
-    this.items.push(item);
-    this.increaseCount(amount);
-  },
-
-  increaseCount(num) {
-    this.count += num;
-  },
-
-  calculateItemPrice() {
-    let tax = 0;
-    const str = '0.';
-    const newStr = parseFloat(str + this.discount);
-    const resPrice = this.items.reduce((acc, item) =>
-      acc += item.price * item.amount, 0);
-    if (this.discount > 0) {
-      tax = resPrice * newStr;
-    }
-
-    return resPrice - tax;
-  },
-
   clear() {
     this.items = [];
     this.totalPrice = 0;
     this.count = 0;
-    this.discount = 0;
   },
-
   print() {
-    console.log(JSON.stringify(this.items));
-    console.log(this.totalPrice);
+    const cartStr = JSON.stringify(cart);
+    console.log(cartStr);
+    console.log('Общая стоимость корзины:', this.totalPrice);
   },
-
+  set setDiscount(value) {
+    if (value === 'METHED') {
+      this.discount = 15;
+    }
+    if (value === 'NEWYEAR') {
+      this.discount = 21;
+    }
+  },
+  discount: 0,
 };
 
 cart.clear();
-cart.add('телофон', 100000, 1);
-cart.add('наушники', 4500, 1);
-cart.add('защитное стекло', 2000, 2);
+cart.setDiscount = 'METHED';
+cart.add('Пылесос', 10000, 1);
+cart.add('Микроволновка', 15000, 1);
+cart.add('Стиралка', 20000, 1);
 cart.print();
