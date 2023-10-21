@@ -16,9 +16,15 @@ const cart = {
     this.count += num;
   },
   calculateItemPrice() {
-    const res = this.items.reduce((acc, item) =>
-      acc += item.price * item.discount, 0);
-    return res;
+    let tax = 0;
+    const str = '';
+    const newStr = parseFloat(str + this.discount);
+    const resPrice = this.items.reduce((acc, item) =>
+      acc += item.price * item.amount, 0);
+    if (this.discount > 0) {
+      tax = resPrice * newStr;
+    }
+    return resPrice - tax;
   },
   clear() {
     this.items = [];
