@@ -1,42 +1,31 @@
 'use strict';
 
 const rectangle = {
-  get rectWidth() {
-    return this.width + 'см';
+  _width: 5,
+  _height: 5,
+  set width(value) {
+    if (typeof value === 'number') {
+      this._width = value;
+    }
+  },
+  set height(value) {
+    if (typeof value === 'number') {
+      this._height = value;
+    }
   },
 
-  get rectHeight() {
-    return this.height + 'см';
+  get perimeter() {
+    return (this._width + this._height) * 2 + ' см';
+  },
+  get square() {
+    return this._width * this._height + ' см2';
   },
 
-  set rectWidth(num = 5) {
-    (Number.isFinite(num)) ? this.width = num : console.log('Введите число');
-  },
-
-  set rectHeight(num = 5) {
-    (Number.isFinite(num)) ? this.height = num : console.log('Введите число');
-  },
-
-  generatePerimeter() {
-    const resPerimetr = (parseInt(this.rectWidth) * 2) +
-    (parseInt(this.rectHeight) * 2) + 'см';
-
-    return resPerimetr;
-  },
-
-  genereteSquare() {
-    const resSquare = parseInt(this.rectWidth) *
-    parseInt(this.rectHeight) + 'см';
-
-    return resSquare;
-  },
 };
 
-rectangle.rectWidth = 5;
-rectangle.rectHeight = 6;
+console.log('Изменяем объект:',
+    rectangle.width = 10, rectangle.height = 15, rectangle);
 
-console.log(rectangle.rectWidth);
-console.log(rectangle.rectHeight);
+console.log('Измеряем периметр:', rectangle.perimeter);
 
-console.log(rectangle.generatePerimeter());
-console.log(rectangle.genereteSquare());
+console.log('Измеряем площадь:', rectangle.square);
