@@ -20,7 +20,7 @@ const cart = {
     const str = '';
     const newStr = parseFloat(str + this.discount);
     const resPrice = this.items.reduce((acc, item) =>
-      acc += item.price * item.amount, 0);
+      acc += item.price * item.count, 0);
     if (this.discount > 0) {
       tax = resPrice * newStr;
     }
